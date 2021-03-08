@@ -19,7 +19,7 @@ imageSourceUrl = 'https://'+ app.config['BLOB_ACCOUNT']  + '.blob.core.windows.n
 @app.route('/home')
 @login_required
 def home():
-    app.logger.info('Home')
+    app.logger.info('HOME ---------------------')
     user = User.query.filter_by(username=current_user.username).first_or_404()
     posts = Post.query.all()
     return render_template(
@@ -31,7 +31,7 @@ def home():
 @app.route('/new_post', methods=['GET', 'POST'])
 @login_required
 def new_post():
-    app.logger.info('NEW POST')
+    app.logger.info('NEW POST ---------------------')
     form = PostForm(request.form)
     if form.validate_on_submit():
         post = Post()
@@ -48,7 +48,7 @@ def new_post():
 @app.route('/post/<int:id>', methods=['GET', 'POST'])
 @login_required
 def post(id):
-    app.logger.info('POST')
+    app.logger.info('POST ---------------------')
     post = Post.query.get(int(id))
     form = PostForm(formdata=request.form, obj=post)
     if form.validate_on_submit():
@@ -63,7 +63,13 @@ def post(id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    app.logger.info('LOGIN ------------')
+    app.logger.info('LOGIN ---------------------')
+    app.logger.debug('DEBUG')
+    app.logger.info('INFO')
+    app.logger.warning('WARNING')
+    app.logger.error('ERROR')
+    app.logger.critical('CRITICAL')
+
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = LoginForm()
@@ -83,7 +89,7 @@ def login():
 
 @app.route(Config.REDIRECT_PATH)  # Its absolute URL must match your app's redirect_uri set in AAD
 def authorized():
-    app.logger.info('AUTHORIZED')
+    app.logger.info('AUTHORIZED ----------------')
     if request.args.get('state') != session.get("state"):
         return redirect(url_for("home"))  # No-OP. Goes back to Index page
     if "error" in request.args:  # Authentication/Authorization failure
@@ -112,7 +118,7 @@ def authorized():
 
 @app.route('/logout')
 def logout():
-    app.logger.info('LOGOUT')
+    app.logger.info('LOGOUT --------------------')
     logout_user()
     if session.get("user"): # Used MS Login
         # Wipe out user and its token cache from session
