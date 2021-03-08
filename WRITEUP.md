@@ -66,5 +66,5 @@ For this app there is no need for any feature of a VM, therefore, it would be be
 The price for running this app is negligible in either case, but, as inexpensive as a VM is, the App Service has a Free tier.
 
 ### Assess app changes that would change your decision.
-I would consider changing to a VM model if I had a need to change associated networking or storage components,
-or if I need to deploy any additional software or applications
+One reason I would consider changing to a VM model if I had a need to change associated networking or storage components.
+Another reason would be if I need to deploy any additional software or applications
