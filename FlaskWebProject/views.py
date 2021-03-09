@@ -79,7 +79,6 @@ def login():
             next_page = url_for('home')
         app.logger.info('  -- Successful login')
         return redirect(next_page)
-    app.logger.info('  -- Invalid form')
     session["state"] = str(uuid.uuid4())
     auth_url = _build_auth_url(scopes=Config.SCOPE, state=session["state"])
     return render_template('login.html', title='Sign In', form=form, auth_url=auth_url)
@@ -111,6 +110,7 @@ def authorized():
         user = User.query.filter_by(username="admin").first()
         login_user(user)
         _save_cache(cache)
+        app.logger.info('  -- Successful login')
     return redirect(url_for('home'))
 
 @app.route('/logout')
